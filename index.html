@@ -168,7 +168,35 @@ var sections = [
     section: "Drivers / Yummers",
     tag: "Caso",
     title: "Avance que nunca le cayó al driver",
-    html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li></ol><p><strong>Otros casos de Avance:</strong></p><ul><li><strong>Cómo optar por un avance:</strong> cuenta saludable, sin deudas pendientes y con buen rating. No es exclusivo de ninguna categoría de conductor.</li><li><strong>No le aparece la opción para solicitar un avance:</strong> la habilitación es automática según salud de cuenta y rating, no se puede activar manualmente.</li><li><strong>Número de cuenta bancaria mal:</strong> se remite a finanzas por correo (atencionaldriver@yummysuperapp.com), con nombre, correo de registro, ciudad, evidencias, y la especificación de la solicitud. Respuesta en 72 horas.</li><li><strong>Ya pagó su avance pero no le habilitan uno nuevo:</strong> también es automático, solo esperar.</li></ul>"
+    html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Cómo optar por un avance",
+    html: "<p>La cuenta debe estar saludable, es decir, sin deudas pendientes y con buen rating. No es exclusivo de ninguna categoría de conductor.</p>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "No le aparece la opción para solicitar un avance",
+    html: "<p>La habilitación es automática según salud de cuenta y rating, no se puede activar manualmente.</p>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Número de cuenta bancaria mal",
+    html: "<p>Se remite a finanzas por correo (atencionaldriver@yummysuperapp.com), pidiendo nombre, correo de registro, ciudad, evidencias, y la especificación de la solicitud. Tiempo de respuesta: 72 horas.</p>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Ya pagó su avance pero no le habilitan uno nuevo",
+    html: "<p>También es automático, solo hay que esperar.</p>"
   },
   {
     group: "casos",
