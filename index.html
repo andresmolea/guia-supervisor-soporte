@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Guía del Supervisor de Soporte Técnico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --paper: #fdfbff;
+    --surface: #ffffff;
+    --ink: #1c1420;
+    --ink-soft: #6b5e74;
+    --ink-faint: #9c90a4;
+    --chip-fill: #320a4b;
+    --chip-ink: #ffffff;
+    --accent: #5c2680;
+    --accent-soft: #f3e9fb;
+    --line: #e9ddf0;
+    --warning: #b35900;
+    --warning-soft: #fbe6d2;
+    --dark-chip: #1c1420;
+    --dark-chip-ink: #ffd864;
+    --v-rides: #8E43C0;
+    --v-delivery: #13805B;
+    --v-b2b: #D9A520;
+    --section-color: #1d7a8c;
+    --shadow: 0 10px 26px rgba(50,10,75,0.12);
+    --shadow-sm: 0 2px 8px rgba(50,10,75,0.08);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-pill: 999px;
+    --font-display: 'Fredoka', ui-rounded, -apple-system, sans-serif;
+    --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #150f1b; --surface: #211731; --ink: #f3ecf9; --ink-soft: #bba9cc; --ink-faint: #8a7399;
+      --chip-fill: #6b2f96; --chip-ink: #ffffff;
+      --accent: #d7b8f0; --accent-soft: #2a1f38;
+      --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
+      --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
+      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530;
+      --section-color: #5fc9dd;
+      --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #150f1b; --surface: #211731; --ink: #f3ecf9; --ink-soft: #bba9cc; --ink-faint: #8a7399;
+    --chip-fill: #6b2f96; --chip-ink: #ffffff;
+    --accent: #d7b8f0; --accent-soft: #2a1f38;
+    --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
+    --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
+    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530;
+    --section-color: #5fc9dd;
+    --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); }
+  body { padding: 20px 16px 60px; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  .brand-header { position: relative; background: linear-gradient(135deg, #9b52c9, #320a4b); color: #ffffff; border-radius: var(--radius-lg); padding: 22px 24px 26px; margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  .brand-header::after { content: ""; position: absolute; top: -34px; right: -34px; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,0.14); }
+  .brand-lockup { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; position: relative; z-index: 1; }
+  .brand-kicker { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+  h1 { font-family: var(--font-display); font-size: clamp(22px, 4.6vw, 31px); font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; position: relative; z-index: 1; color: #ffffff; }
+  .sub { font-size: 14px; opacity: 0.85; max-width: 48ch; position: relative; z-index: 1; color: #ffffff; }
+  .brand-dots { position: absolute; bottom: 16px; right: 20px; display: flex; gap: 6px; }
+  .brand-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); display: block; }
+  .brand-logo { position: absolute; top: 20px; right: 22px; height: 24px; width: auto; z-index: 2; }
+  .tabs { position: sticky; top: 10px; z-index: 6; display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 4px; box-shadow: var(--shadow-sm); margin-bottom: 14px; }
+  .tab-btn { flex: 1; font-family: var(--font-display); font-size: 13.5px; font-weight: 600; color: var(--ink-soft); background: none; border: none; padding: 9px 10px; border-radius: var(--radius-pill); cursor: pointer; transition: background .15s ease, color .15s ease; }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { background: var(--chip-fill); color: var(--chip-ink); box-shadow: var(--shadow-sm); }
+  .verticals { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .v-btn { font-family: var(--font-display); font-size: 12px; font-weight: 600; padding: 6px 13px; border-radius: var(--radius-pill); cursor: pointer; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-soft); transition: all .15s ease; }
+  .v-btn:hover { border-color: var(--ink-faint); }
+  .v-btn.active { color: #ffffff; border-color: transparent; }
+  .v-btn.active { box-shadow: var(--shadow-sm); }
+  .v-btn.v-rides.active { background: var(--v-rides); }
+  .v-btn.v-delivery.active { background: var(--v-delivery); }
+  .v-btn.v-b2b.active { background: var(--v-b2b); color: #2b2206; }
+  .section-divider { font-family: var(--font-display); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--section-color); margin: 26px 2px 14px; padding-bottom: 8px; border-bottom: 2px solid var(--section-color); }
+  .section-divider:first-child { margin-top: 2px; }
+  .section-divider.hidden { display: none; }
+  .vtag { display: inline-block; font-family: var(--font-display); font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); margin-left: 6px; margin-bottom: 10px; color: #ffffff; }
+  .vtag.rides { background: var(--v-rides); }
+  .vtag.delivery { background: var(--v-delivery); }
+  .vtag.b2b { background: var(--v-b2b); color: #2b2206; }
+  .search-box { position: sticky; top: 58px; background: var(--paper); padding: 0 0 14px; z-index: 5; }
+  #search { width: 100%; padding: 13px 16px; font-size: 15.5px; font-family: var(--font-body); font-weight: 500; border-radius: var(--radius-md); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); }
+  #search::placeholder { color: var(--ink-faint); }
+  #search:focus { outline: none; border-color: var(--chip-fill); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .count { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; font-weight: 700; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+  .card h2 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin: 2px 0 10px; color: var(--ink); }
+  .card.hidden { display: none; }
+  .card p { font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; }
+  .card ol, .card ul { font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; padding-left: 20px; }
+  .card li { margin-bottom: 6px; }
+  .card table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 8px 0; }
+  .card th, .card td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .card th { color: var(--ink-faint); font-weight: 700; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .card code, .card pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; }
+  .card pre { background: var(--accent-soft); padding: 10px 12px; border-radius: 10px; overflow-x: auto; white-space: pre-wrap; }
+  .tag { display: inline-block; font-family: var(--font-display); font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-pill); background: var(--accent-soft); color: var(--accent); margin-bottom: 10px; }
+  .tag.caso { background: var(--chip-fill); color: var(--chip-ink); }
+  .tag.cierre { background: var(--dark-chip); color: var(--dark-chip-ink); }
+  .tag.pend { background: var(--warning-soft); color: var(--warning); }
+  .empty { text-align: center; color: var(--ink-faint); padding: 40px 0; display: none; font-family: var(--font-display); font-weight: 600; }
+  a { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand-header">
+    <img class="brand-logo" src="data:image/png;base64,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" alt="Yummy">
+    <div class="brand-kicker">Yummy · Live Ops Support</div>
+    <h1>Guía del Supervisor</h1>
+    <div class="sub">Buscá tu caso por palabra clave (ej. "accidente", "tattoo", "avance", "bloqueo").</div>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-group="casos">Casos</button>
+    <button class="tab-btn" data-group="canales">Canales de Slack</button>
+    <button class="tab-btn" data-group="herramientas">Herramientas</button>
+  </div>
+  <div class="verticals" id="verticals">
+    <button class="v-btn v-rides" data-vertical="Rides">Rides</button>
+    <button class="v-btn v-delivery" data-vertical="Delivery">Delivery</button>
+    <button class="v-btn v-b2b" data-vertical="B2B">B2B</button>
+  </div>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Escribí tu caso o palabra clave..." autofocus>
+    <div class="count" id="count"></div>
+  </div>
+  <div id="cards"></div>
+  <div class="empty" id="empty">No se encontró nada con esa búsqueda.</div>
+</div>
+
+<script>
+var sections = [
+  {
+    group: "casos",
+    tag: "Reglas",
+    title: "Reglas generales",
+    html: "<ul><li>Todo bloqueo, sin importar el motivo, requiere cargar el formulario de bloqueo correspondiente.</li><li>Toda orden ACTIVA (en curso, aún no marcada como entregada) es responsabilidad de Monitor, no nuestra.</li><li>Toda orden YA marcada como entregada es nuestra (no de Monitor), sin importar el motivo por el que escriban, no solo cuando el cliente dice que no la recibió. Por ejemplo, también aplica cuando un Yummer escribe por una orden que devolvió al comercio y le quedó la deuda.</li><li>Nunca se le dice a un driver o usuario que \"no hay solución posible\" sin antes escalar o confirmar el procedimiento correspondiente.</li><li>No se cierra ninguna conversación sin haber ofrecido un camino concreto: escalación, revisión del caso, o confirmación del proceso a seguir.</li><li>Siempre filtrar por ID, correo u otro dato <strong>en Slack</strong> (búsqueda del canal o del workspace) antes de proceder, para verificar que no exista ya un reporte previo del mismo caso. Aplica a todos los casos en general, no solo a los documentados acá.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "Delivery",
+    vertical: "Delivery",
+    tag: "Caso",
+    title: "Delivery (orden no entregada o marcada como entregada sin serlo)",
+    html: "<ol><li>Se indica al analista que le dé al cliente el número del Yummer y le pida un número de contacto alterno (por si el registrado en la app está malo).</li><li>El supervisor le escribe al Yummer por WhatsApp para preguntarle qué pasó.</li><li>Se evalúa la respuesta.</li><li>El Yummer cumple su deber si llegó al punto de entrega que marca la app y esperó 30 minutos. No aplica reembolso al cliente en ninguno de estos escenarios:<ul><li>El cliente no contestó.</li><li>La dirección estaba errada y el cliente no quiso recibir la orden en la dirección que él mismo marcó.</li><li>El cliente no salió a recibir la orden.</li><li>El Yummer avisó (por soporte o por otra vía) y se le indicó que marcara la orden como entregada y devolviera la orden al comercio o al cubo negro según corresponda.</li></ul>En cualquiera de estos casos, el Yummer debe devolver la orden al comercio con foto de la devolución como evidencia. Las órdenes de KFC no se devuelven al comercio, excepto si son de fuera de Caracas. Si la orden es de Caracas, se deben devolver al cubo negro. Siempre que escriban por este caso, pedir evidencia de la entrega: conversación por WhatsApp, capturas, lo que haya.</li><li>Si el Yummer no cumplió (marcó la orden como entregada sin instrucción de hacerlo, o no fue al punto de entrega), sí aplica reembolso al cliente, y se envía el caso por \"órdenes no entregadas\" a Planning para que le pongan la deuda al Yummer.</li></ol><p><strong>Notas:</strong></p><ul><li>No se permiten cambios de dirección por seguridad; el Yummer siempre debe ir al punto exacto que marca la app, incluso si el cliente alega que la dirección está errada.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    vertical: "Rides",
+    tag: "Caso",
+    title: "Accidentes",
+    html: "<ol><li>El accidente llega por Live Ops (lo reporta el analista que atendió el caso).</li><li>Se etiqueta al <strong>analista de BOT</strong>, quien contacta a las partes, saca ambas versiones del suceso, y arma la planilla con el template completo.</li><li>El analista de BOT publica la planilla en <strong>#accidentes-liveops</strong>, etiquetando a los supervisores.</li><li>Se escala la misma planilla a <strong>#cxylegal</strong>, tageando a Eubrys Rojas con copia a Andrés Molea, Dariana Acevedo, Davianis González, María Gabriela Colina Vaamondes y María Medina.</li><li>Se escala al grupo de WhatsApp <strong>\"ESP + COORD LIVE OPS SUPPORT\"</strong>, tageando a María Medina ahí. Las fotos del accidente nunca se comparten por WhatsApp, solo por #cxylegal.</li><li>El analista de BOT publica en <strong>#bloqueos-yummers-liveops</strong> pidiendo el bloqueo preventivo del conductor.</li><li>Al cargar el formulario de bloqueo: motivo = \"Experiencia al Driver\" (no \"Accidente\"), tipo = preventivo, y en la descripción se coloca \"Validación de accidente en el servicio X\".</li><li>Después del bloqueo, el caso pasa a <strong>Escuela</strong> para seguimiento.</li><li>La conversación con el afectado la sigue manejando el analista de BOT.</li><li>El tema de la póliza o seguro lo maneja <strong>María Medina</strong>.</li></ol><p><strong>Template de la planilla:</strong></p><pre>Detalles del accidente\n\nTrip: [ID del viaje o N/A]\nDriver: [Central ID] - [Nombre completo]\nCI: [cédula]\nEmail: [correo]\nTeléfono: [teléfono]\nCiudad: [ciudad]\nVehículo / Datos del Vehículo: [marca, placa, modelo, color, clase, año]\n\nUsuario: [Central ID] - [Nombre]\nCI: [cédula]\nTeléfono: [teléfono]\nCorreo: [correo]\n\nFecha: [dd/mm/aaaa]\nHora: [hora aprox]\nCiudad: [ciudad]\nInterviene tránsito: Sí/No\nFecha en que llenó la planilla: [fecha o N/A]\n\nDetalles del Suceso: [narrativa de lo ocurrido]\n\nObservaciones: [estado de salud de ambas partes, si acudieron a centro médico]</pre>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Avance que nunca le cayó al driver",
+    html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li></ol><p><strong>Otros casos de Avance:</strong></p><ul><li><strong>Cómo optar por un avance:</strong> cuenta saludable, sin deudas pendientes y con buen rating. No es exclusivo de ninguna categoría de conductor.</li><li><strong>No le aparece la opción para solicitar un avance:</strong> la habilitación es automática según salud de cuenta y rating, no se puede activar manualmente.</li><li><strong>Número de cuenta bancaria mal:</strong> se remite a finanzas por correo (atencionaldriver@yummysuperapp.com), con nombre, correo de registro, ciudad, evidencias, y la especificación de la solicitud. Respuesta en 72 horas.</li><li><strong>Ya pagó su avance pero no le habilitan uno nuevo:</strong> también es automático, solo esperar.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Bloqueo de drivers con avance activo",
+    html: "<ol><li>Alguien reporta en el hilo correspondiente el driver a bloquear (ID, nombre y motivo).</li><li>Si al intentar aplicar el bloqueo el driver tiene avance activo: se agrega al blacklist manual del <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">dashboard de avances</a> para que no pueda pedir uno nuevo, se deja un comentario en ese mismo hilo indicando que tiene avance activo y que se bloqueará una vez pague, y se deja también el reporte por <strong>#cxylegal</strong>.</li><li>El sistema revisa esto automático: en el momento exacto en que el driver termina de pagar el avance, manda un aviso al canal <strong>#bloqueos-avances</strong> con este formato: \"El siguiente conductor: (ID y nombre) ya pagó el avance y debe ser bloqueado por: (motivo)\".</li><li>Al ver ese aviso: se aplica el bloqueo real de la cuenta en Yummy, se llena el formulario de bloqueo correspondiente, y se vuelve al hilo original del reporte para dejar el comentario confirmando que ya se bloqueó.</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Drivers / Yummers",
+    tag: "Caso",
+    title: "Maltrato o acoso entre driver y usuario",
+    html: "<p>Ejemplo real: un conductor maltrató verbalmente a la hija del usuario; el usuario adjunta capturas de WhatsApp como evidencia.</p><ol><li>Se procede con bloqueo por <strong>falta de respeto</strong>.</li><li>Se publica en <strong>#bloqueos-yummers-liveops</strong>: \"Feliz tarde, por favor proceder con el bloqueo por falta de respeto al usuario de parte de este conductor: [Central ID] [Nombre] [Correo] [Teléfono]\".</li><li>Se carga el formulario de bloqueo correspondiente.</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Pagos y cupones",
+    vertical: "Delivery",
+    tag: "Caso",
+    title: "Compensación YD (Delivery)",
+    html: "<p>Aplica cuando el analista considera que se le debe dar una compensación al cliente, y lo solicita. Los cupones de Delivery son preaplicados: Planning se lo pone directo como saldo a favor (esos $3). Se publica en <strong>#compensaciones-v2</strong>.</p><p><strong>Formato:</strong></p><pre>[Central ID]\n[Nombre]\n[Teléfono]\n[Correo]\n[Monto]</pre>"
+  },
+  {
+    group: "casos",
+    section: "Pagos y cupones",
+    vertical: "Rides",
+    tag: "Caso",
+    title: "Compensaciones Rides",
+    html: "<p>Mismo criterio que en Delivery: lo solicita el analista y el supervisor lo aprueba, salvo que considere que no aplica. Acá el cupón es un código escrito que se le pasa al cliente, y el cliente tiene que colocarlo él mismo.</p><ol><li>El código base ya existe según el monto (3YD = $3, 2YD = $2). Se le agregan las iniciales del cliente al final para hacerlo único (ej. 3YDRA3).</li><li>Se carga en el dashboard de Rides: Settings -> Promo Codes -> botón verde \"Add Promo\", con estos campos:<table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Promo code</td><td>El código armado (ej. 3YD6114FV)</td></tr><tr><td>Value</td><td>Monto (2 o 3)</td></tr><tr><td>Description</td><td>CompensacionDelivery</td></tr><tr><td>Type</td><td>Absolute</td></tr><tr><td>Minimum User Payment ($)</td><td>0.5</td></tr><tr><td>Corporate Promotion Code</td><td>No</td></tr><tr><td>Is Visible</td><td>No</td></tr><tr><td>Is Preapplicable</td><td>No</td></tr><tr><td>Country</td><td>Venezuela, Bolivarian Republic Of</td></tr><tr><td>City</td><td>Ciudad del cliente</td></tr><tr><td>Trip Services</td><td>Yummy, Motto, Vintage</td></tr><tr><td>Number days without trip</td><td>0</td></tr><tr><td>Number of Uses</td><td>1</td></tr><tr><td>Number of Uses Per User</td><td>1</td></tr><tr><td>Start Date</td><td>Hoy</td></tr><tr><td>Expiry Date</td><td>Hoy + 30 días</td></tr><tr><td>Completed trips</td><td>Range of completed trips</td></tr><tr><td>Minimum number of trips</td><td>0</td></tr><tr><td>Maximum number of trips</td><td>0</td></tr><tr><td>Delete if it's a Shared Trip</td><td>No</td></tr><tr><td>Is Loyalty</td><td>No</td></tr><tr><td>Device Type</td><td>Select Device (en blanco)</td></tr><tr><td>Is by payment method</td><td>Desactivado</td></tr></table></li><li>Se registra en el sheet \"<a href=\"https://docs.google.com/spreadsheets/d/10EW9vF2p9RbQGPOIUuMUoboclTP4ngvzVrpyyt8ZlGQ/edit\" target=\"_blank\">Cupones de Compensación</a>\" (columnas: Cupón, Fecha, Líder que otorga, Turno, User/Cliente, Correo, Telf, monto).</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Pagos y cupones",
+    vertical: "Rides",
+    tag: "Caso",
+    title: "Código Tattoo (activación o renovación)",
+    html: "<ol><li>El caso llega por Live Ops Support (usuario pide activar o renovar su código Tattoo).</li><li>El supervisor publica en <strong>#codigos-rides-marketing</strong>, tageando a <strong>Melanie Álvarez</strong>.</li><li>Melanie Álvarez activa o renueva el código.</li></ol><p><strong>Formato del mensaje:</strong></p><pre>Buen día, por favor apoyo en la activación de este cupón tatto. @Melanie Álvarez\n\n[Central ID]    [correo]    [Nombre]    [Apellido]    [Cédula]    [Teléfono]\n[Ciudad]\n[Código]\n[Foto del código, adjunta]</pre><p>El código y la foto los manda el propio usuario, no los arma el supervisor.</p><p>Si el usuario reclama que aún no le han activado el código de este mes, se le indica que ya se escaló y se espera respuesta, sin dar más detalle.</p>"
+  },
+  {
+    group: "casos",
+    section: "Pagos y cupones",
+    tag: "Caso",
+    title: "Pagos (validar pago móvil / débito inmediato)",
+    html: "<p>Se valida con la herramienta <strong>Pagos V2</strong> (<a href=\"https://pagosv2.yummysuperapp.com/\" target=\"_blank\">pagosv2.yummysuperapp.com</a>), que permite filtrar por monto y otros datos para confirmar si un pago fue recibido. Reemplaza la herramienta de pagos anterior. También permite ver pagos por <strong>Binance</strong>.</p><ul><li><strong>Pago móvil:</strong> se filtra por el monto y el número de teléfono asociado al pago.</li><li><strong>Débito inmediato:</strong> se filtra por el monto y el nombre del titular de la cuenta desde donde se realizó el pago.</li><li><strong>Binance:</strong> se filtra por el monto en dólares.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "Pagos y cupones",
+    tag: "Caso",
+    title: "Marketplace (MP)",
+    html: "<p><strong>Problemas de pago o envío entre vendedor y comprador:</strong></p><ol><li>Se solicitan los datos del vendedor y del comprador (según corresponda), captura de la venta/compra realizada, y captura del pago (si quien reporta es el comprador).</li><li>Se busca al usuario en la base de datos de MP, apartado <strong>Usuarios</strong>, para ubicar su información registrada.</li><li>Se ubican los datos de la venta en <strong>Desembolsos</strong>: se busca por la fecha de la transacción y se coteja con los datos del vendedor/comprador para evitar errores.</li><li>Se consulta por el canal <strong>#team-marketplace</strong> si el pago o el envío se realizó con éxito.</li><li>El equipo de Marketplace responde si hay algún inconveniente o no, y con esa respuesta se le informa al vendedor/comprador.</li></ol><p><strong>Órdenes financiadas con Cashea:</strong> mismo proceso, con la diferencia de que al ubicar el ID de la orden se revisa en la pestaña <strong>Cashea</strong> (en vez de Desembolsos) para corroborar si las cuotas están pagadas o pendientes. Ya con esa información, se remite igual al canal <strong>#team-marketplace</strong> para su verificación.</p>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    tag: "Caso",
+    title: "Prime (suscripción)",
+    html: "<ol><li>Se indica al analista que remita el pago a <strong>Planning</strong> para verificar si el cobro fue efectivo.</li><li>Si el cobro fue efectivo (se cobró pero no se aplicó el beneficio), se le pide al usuario un video demostrando que no le aplicó el Prime.</li><li>Se escala a <strong>#team-yummy-rides</strong> o <strong>#team-delivery</strong> según la vertical.</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    vertical: "Rides",
+    tag: "Caso",
+    title: "SOS (botón de emergencia)",
+    html: "<p>El usuario tiene un botón de emergencia una vez el viaje está iniciado. Al presionarlo, llega una alerta automática a <strong>#sos-boton-rides</strong> con todos los datos del viaje, vehículo, usuario y conductor (incluyendo última ubicación).</p><p>Mensaje estándar: \"Buen día, te escribimos del chat de soporte técnico Yummy Rides, hemos recibido tu alerta de S.O.S, ¿Te encuentras en una situación de emergencia?\"</p><p>Lo ve normalmente el <strong>analista de BOT</strong>. El supervisor lo ve solo si está en break, y debe asegurarse de que alguien esté pendiente del canal siempre.</p>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    tag: "Caso",
+    title: "TicketMundo",
+    html: "<p>El analista reporta directo en <strong>#team-ticketmundo</strong> (datos del cliente, evento, pago). El rol del supervisor acá es solo estar pendiente por si Paula, Luis, o alguien de ese equipo pide apoyo de nuestro lado.</p>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    tag: "Caso",
+    title: "Otros reportes graves por #cxylegal",
+    html: "<p>El canal #cxylegal no es solo para accidentes, también se reportan ahí otras situaciones graves. En todos estos reportes (incluyendo accidentes), se etiqueta a Coordinación y a Gerencia con copia; el reporte como tal va dirigido a Eubrys.</p><p><strong>Intento de sedación o robo a conductor:</strong> ej. un pasajero intentó sedar a la conductora con alguna sustancia con intención de robarle. Se reporta el intento de agresión, si hubo intervención policial, y se aplica bloqueo preventivo de la cuenta del pasajero.</p><p><strong>Presunto alquiler de perfil y estafa:</strong> un usuario reporta que el titular de una cuenta de conductor le alquiló su perfil, cobró por eso y luego desapareció sin responder. Se solicita bloqueo preventivo del perfil del conductor por violación de términos.</p>"
+  },
+  {
+    group: "casos",
+    tag: "Cierre",
+    title: "Cierre de turno",
+    html: "<p>Lo arma quien está en el rol de analista de BOT ese turno. Los supervisores agregan su propio cierre aparte.</p><pre>Cierre: TURNO [número] [fecha]\nAgentes convocados: [número]\nAsistentes: [número]\n\nMÉTRICAS:\nCola: [descripción]\nChat totales: [número]\nSatisfacción: [%]\nSatisfacción del mes: [%]\nTMO: [tiempo]\nTPR: [tiempo]\nSLA: [%]\n\nPRINCIPALES CONTACTOS:\n[etiqueta] [%]\n[etiqueta] [%]\n\nBOTS:\nAnalista: [nombre]\nBot: [número]\nAgendados: [número]\nSOS General: [número] sin emergencia real\nAccidentes: [número]\nBloqueo: [número]\nBlocking Alerts: [número]\n---------------------------------------\nPendiente para el otro turno:\nBot: [número]\nAgendados: [número]\n\nSATISFACCIÓN DEL EQUIPO:\n[nombre]: [%]</pre>"
+  },
+  {
+    group: "canales",
+    tag: "Canales",
+    title: "Canales de Slack",
+    html: "<table><tr><th>Canal</th><th>Qué se reporta</th><th>Qué hacemos</th></tr><tr><td>#live-ops-support</td><td>Cola general en vivo de soporte (Rides + Delivery). SLA de 3 minutos de respuesta (para los analistas).</td><td>Reportar al grupo correspondiente, o responder directo según el requerimiento.</td></tr><tr><td>#accidentes-liveops</td><td>El analista de BOT arma la planilla completa del accidente.</td><td>Se escala la misma planilla por legal (#cxylegal) y por el grupo de WhatsApp de Live Ops.</td></tr><tr><td>#cxylegal</td><td>Escalación de accidentes y otras situaciones graves (denuncias, fraude, etc.).</td><td>Reportamos ahí los accidentes y los casos de denuncias, o cualquier otro caso que amerite escalarlo a legal.</td></tr><tr><td>Grupo de WhatsApp (no es Slack): \"ESP + COORD LIVE OPS SUPPORT\"</td><td>Accidentes.</td><td>Se manda la planilla ahí, etiquetando a María Medina; nunca se mandan fotos por este medio.</td></tr><tr><td>#bloqueos-yummers-liveops</td><td>Solicitud de bloqueo de conductores.</td><td>Se bloquea con el motivo correspondiente y se carga el formulario de bloqueo.</td></tr><tr><td>#codigos-rides-marketing</td><td>Activación o renovación de códigos promocionales (ej. código Tattoo).</td><td>Se tagea a Melanie Álvarez, quien lo activa o renueva.</td></tr><tr><td>#bot-avenue-rides</td><td>Alertas automáticas de calificación baja (manejo imprudente, situación irregular con el pago, conductor distinto al del app, falla mecánica, etc.).</td><td>Las revisa el analista de BOT, quien resuelve el problema, se disculpa con el usuario según corresponda, y le da feedback al driver si hace falta.</td></tr><tr><td>#agendados_corporativos</td><td>Solicitudes de viajes agendados de cuentas corporate (llegan automático por un Typeform).</td><td>El analista de BOT confirma todo con el driver y el cliente, y sigue pendiente del caso hasta que se resuelva.</td></tr><tr><td>#compensaciones-v2</td><td>Compensación YD a usuarios de Delivery.</td><td>Se carga con el formato indicado en el caso de Compensación YD.</td></tr><tr><td>#sos-boton-rides</td><td>Alertas del botón SOS.</td><td>El analista de BOT (o el supervisor en break) confirma si es una emergencia real.</td></tr><tr><td>#team-yummy-rides / #team-delivery</td><td>Escalación por vertical (ej. casos de Prime).</td><td>El equipo de la vertical confirma y responde.</td></tr><tr><td>#bloqueos-avances</td><td>Aviso automático del motor de créditos cuando un driver con avance activo (en blacklist manual) termina de pagar.</td><td>Se aplica el bloqueo real de la cuenta.</td></tr><tr><td>#team-marketplace</td><td>Consulta sobre si un pago o envío de Marketplace (MP) se realizó con éxito, incluyendo órdenes financiadas con Cashea.</td><td>El equipo de Marketplace confirma y se le informa al vendedor/comprador.</td></tr><tr><td>#ajustes-yummer-monitor</td><td>Ajustes a Yummers que carga Monitor.</td><td>No es que le pedimos algo a otro departamento de forma rutinaria, solo observamos. Se puede preguntar algo puntual ahí si hace falta.</td></tr></table>"
+  },
+  {
+    group: "herramientas",
+    tag: "Herramientas",
+    title: "Herramientas",
+    html: "<table><tr><th>Herramienta</th><th>Para qué</th></tr><tr><td><a href=\"https://docs.google.com/forms/d/e/1FAIpQLSfkgLgrBHucs8BZEgFmZuqqM-v63-9gQxc5CAAgCigIPeOosw/viewform\" target=\"_blank\">Formulario de bloqueos</a></td><td>Cargar bloqueo de conductor.</td></tr><tr><td><a href=\"https://lookerstudio.google.com/u/0/reporting/fe326454-6fe3-4c28-8d08-2e6a42f94073/page/p_shgdmy0y2c\" target=\"_blank\">Looker: feedback al driver</a></td><td>Filtrar si el driver ya recibió feedback (correo, contains).</td></tr><tr><td><a href=\"https://docs.google.com/forms/d/e/1FAIpQLSc04yPpxY10ISRKBACItRQ0Mihl85FXkaHXYMIoAdEm8fz9qg/viewform\" target=\"_blank\">Formulario ajustes a Yummer</a></td><td>Cargar ajustes a un Yummer (Delivery).</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1rxXGUn5gRFiShZ16-EaJfXi3QzH4Xmykp5oj3w_V4y0/edit\" target=\"_blank\">Sheet: validar ajustes Yummer</a></td><td>Confirmar ajustes realizados.</td></tr><tr><td><a href=\"https://docs.google.com/forms/d/e/1FAIpQLSf91ZHqzdG9E5LstI8H0y-odv6HuJqLei7oBPdIo7-XciEluA/viewform\" target=\"_blank\">Formulario ajustes Rides &gt;$20</a></td><td>Ajustes mayores a $20. Menores los hace el supervisor directo.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1uFtrH2_nz5uKtHJmXQTojbepBRzDhetOLXIGcedt9M4/edit\" target=\"_blank\">Sheet: validar ajustes Rides &gt;$20</a></td><td>Confirmar ajustes realizados.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1cVeVxzPAttair-IgObIYbXwsfdmvsD5XtwEky4Cvveo/edit\" target=\"_blank\">Sheet: registro de bots</a></td><td>Registro de bots por analista.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1GW4NZxq0uJlNd9UGh3CwqtWSRecFhUHc/edit\" target=\"_blank\">Sheet: cronograma</a></td><td>Cronograma de tareas del equipo.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1Va8qA9CVaePUcaPoW9oFyJqBIFp3MNIyQBJEyO2e1g4/edit\" target=\"_blank\">Sheet: descuentos a Yummer</a></td><td>Registro de descuentos.</td></tr><tr><td><a href=\"https://lookerstudio.google.com/reporting/b245af18-5dbd-488b-a6f4-b2ccfadaa144/page/p_ahpx51ebrc\" target=\"_blank\">Looker: servicios / ranking drivers</a></td><td>Servicios completados y ranking para agendados.</td></tr><tr><td><a href=\"https://lookerstudio.google.com/reporting/60c3f969-a453-4085-af7d-dcb128bed65a/page/syXUD\" target=\"_blank\">Looker: cobros con POS</a></td><td>Validar cobros de órdenes con POS.</td></tr><tr><td><a href=\"https://dashboard.stripe.com/acct_1KRKxZAPkjdYTAQS/payments\" target=\"_blank\">Stripe</a></td><td>Validar pagos.</td></tr><tr><td><a href=\"https://id.ravelin.com/?dest=https%3A%2F%2Fyummysuperapp.ravelin.com%2Fhome\" target=\"_blank\">Ravelin</a></td><td>Sin acceso: pedir a Paola.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/10EW9vF2p9RbQGPOIUuMUoboclTP4ngvzVrpyyt8ZlGQ/edit\" target=\"_blank\">Sheet: Cupones Compensación Rides</a></td><td>Registro de cupones $2 y $3.</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1DPqT8gEz6DWyXkbs-fMqmZCpsM5RPxibeqqz3pKWd4U/edit\" target=\"_blank\">Sheet: incidencias ajustes &lt;$20</a></td><td>Registro de incidencias menores.</td></tr><tr><td><a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">Credit API</a></td><td>Estado de desembolso de avances.</td></tr><tr><td><a href=\"https://pagosv2.yummysuperapp.com/\" target=\"_blank\">Pagos V2</a></td><td>Nueva herramienta de pagos (reemplaza la anterior).</td></tr><tr><td><a href=\"https://docs.google.com/spreadsheets/d/1CZiWYHbpf3Pss-YqmhQjy96IjnTqAIFU6sWXbWDtefM/edit?gid=1413806600\" target=\"_blank\">BDD Central Rides</a></td><td>Analistas asignados y quién monitorea a cada uno.</td></tr></table>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    tag: "Caso",
+    title: "Identidad de cliente (cambio de correo, teléfono o cédula)",
+    html: "<ol><li>Se reporta en el canal <strong>#identidad-clientes</strong>, tageando al subequipo de Soporte TI, con los datos actuales del perfil (Central ID, Nombre, Teléfono, Correo) y una captura de pantalla como evidencia.</li><li>Para cambio de correo o teléfono: \"Buenas tardes, equipo. User de Delivery (o Rides) desea colocar el correo electrónico / número de teléfono: [nuevo valor] en el perfil [Central ID] nos apoyan por favor.\"</li><li>Para corregir una cédula mal registrada: \"Me apoyan, por favor, corrigiendo la cédula de este user de Rides/Delivery ya que está errada\" + los datos del perfil + \"Cédula correcta: [número]\".</li><li><strong>Importante:</strong> antes de cambiar un correo, no debe existir ya otro perfil creado con ese correo. Si ya existe un perfil creado con ese correo, no hay vuelta atrás: no se puede hacer el cambio.</li><li>El equipo confirma en el mismo hilo cuando el cambio quedó hecho (\"cambio procesado\" / \"cambio realizado\").</li></ol>"
+  },
+  {
+    group: "casos",
+    tag: "Pendiente",
+    title: "Pendientes por documentar",
+    html: "<ul><li>Pagos adicionales (fuera de Pagos V2)</li><li>Rotulado del vehículo (se lo pasan a Alexa por ahora)</li></ul>"
+  }
+];
+
+var cardsEl = document.getElementById('cards');
+var countEl = document.getElementById('count');
+var emptyEl = document.getElementById('empty');
+
+var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b' };
+var lastSection = null;
+
+sections.forEach(function (s, i) {
+  if (s.group === 'casos' && s.section) {
+    if (s.section !== lastSection) {
+      var divider = document.createElement('div');
+      divider.className = 'section-divider';
+      divider.dataset.section = s.section;
+      divider.textContent = s.section;
+      cardsEl.appendChild(divider);
+      lastSection = s.section;
+    }
+  } else if (s.group === 'casos') {
+    lastSection = null;
+  }
+  var div = document.createElement('div');
+  div.className = 'card';
+  div.dataset.group = s.group;
+  if (s.section) div.dataset.section = s.section;
+  if (s.vertical) div.dataset.vertical = s.vertical;
+  div.dataset.text = (s.title + ' ' + s.tag + ' ' + s.html.replace(/<[^>]+>/g, ' ')).toLowerCase();
+  var tagClass = 'tag';
+  if (s.tag === 'Pendiente') tagClass += ' pend';
+  else if (s.tag === 'Caso') tagClass += ' caso';
+  else if (s.tag === 'Cierre') tagClass += ' cierre';
+  var vtagHtml = s.vertical ? '<span class="vtag ' + vertClass[s.vertical] + '">' + s.vertical + '</span>' : '';
+  div.innerHTML = '<span class="' + tagClass + '">' + s.tag + '</span>' + vtagHtml + '<h2>' + s.title + '</h2>' + s.html;
+  cardsEl.appendChild(div);
+});
+
+var activeGroup = 'casos';
+var activeVertical = 'todos';
+
+function updateCount(n) {
+  countEl.textContent = n + (n === 1 ? ' resultado' : ' resultados');
+}
+
+function applyFilters() {
+  var q = document.getElementById('search').value.trim().toLowerCase();
+  var terms = q.split(/\s+/).filter(Boolean);
+  var visible = 0;
+  var sectionVisible = {};
+  document.querySelectorAll('.card').forEach(function (card) {
+    var groupMatch = card.dataset.group === activeGroup;
+    var vertMatch = activeVertical === 'todos' || card.dataset.vertical === activeVertical;
+    var textMatch = terms.length === 0 || terms.every(function (t) { return card.dataset.text.indexOf(t) !== -1; });
+    var match = groupMatch && vertMatch && textMatch;
+    card.classList.toggle('hidden', !match);
+    if (match) visible++;
+    if (match && card.dataset.section) sectionVisible[card.dataset.section] = true;
+  });
+  document.querySelectorAll('.section-divider').forEach(function (div) {
+    div.classList.toggle('hidden', !(activeGroup === 'casos' && sectionVisible[div.dataset.section]));
+  });
+  updateCount(visible);
+  emptyEl.style.display = visible === 0 ? 'block' : 'none';
+}
+applyFilters();
+
+document.getElementById('search').addEventListener('input', applyFilters);
+
+document.getElementById('tabs').addEventListener('click', function (e) {
+  var btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  activeGroup = btn.dataset.group;
+  document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.toggle('active', b === btn); });
+  document.getElementById('verticals').style.display = activeGroup === 'casos' ? 'flex' : 'none';
+  applyFilters();
+});
+
+document.getElementById('verticals').addEventListener('click', function (e) {
+  var btn = e.target.closest('.v-btn');
+  if (!btn) return;
+  var alreadyActive = btn.classList.contains('active');
+  activeVertical = alreadyActive ? 'todos' : btn.dataset.vertical;
+  document.querySelectorAll('.v-btn').forEach(function (b) { b.classList.toggle('active', !alreadyActive && b === btn); });
+  applyFilters();
+});
+</script>
+</body>
+</html>
