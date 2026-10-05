@@ -25,7 +25,7 @@
     --v-rides: #8E43C0;
     --v-delivery: #13805B;
     --v-b2b: #D9A520;
-    --v-avances: #2E6FBD;
+    --v-avances: #7B1E3D;
     --v-ticketmundo: #C0392B;
     --v-marketplace: #0E8FBF;
     --section-color: #1d7a8c;
@@ -45,7 +45,7 @@
       --accent: #d7b8f0; --accent-soft: #2a1f38;
       --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
       --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
+      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #c65d7b; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
       --section-color: #5fc9dd;
       --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
     }
@@ -56,7 +56,7 @@
     --accent: #d7b8f0; --accent-soft: #2a1f38;
     --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
     --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
+    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #c65d7b; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
     --section-color: #5fc9dd;
     --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
   }
@@ -105,6 +105,12 @@
   .count { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; font-weight: 700; }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
   .card h2 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin: 2px 0 10px; color: var(--ink); }
+  .card h2.rides { color: var(--v-rides); }
+  .card h2.delivery { color: var(--v-delivery); }
+  .card h2.b2b { color: var(--v-b2b); }
+  .card h2.avances { color: var(--v-avances); }
+  .card h2.ticketmundo { color: var(--v-ticketmundo); }
+  .card h2.marketplace { color: var(--v-marketplace); }
   .card.hidden { display: none; }
   .card p { font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; }
   .card ol, .card ul { font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; padding-left: 20px; }
@@ -365,7 +371,8 @@ sections.forEach(function (s, i) {
   else if (s.tag === 'Caso') tagClass += ' caso';
   else if (s.tag === 'Cierre') tagClass += ' cierre';
   var vtagHtml = s.vertical ? '<span class="vtag ' + vertClass[s.vertical] + '">' + s.vertical + '</span>' : '';
-  div.innerHTML = '<span class="' + tagClass + '">' + s.tag + '</span>' + vtagHtml + '<h2>' + s.title + '</h2>' + s.html;
+  var h2Class = s.vertical ? ' class="' + vertClass[s.vertical] + '"' : '';
+  div.innerHTML = '<span class="' + tagClass + '">' + s.tag + '</span>' + vtagHtml + '<h2' + h2Class + '>' + s.title + '</h2>' + s.html;
   cardsEl.appendChild(div);
 });
 
