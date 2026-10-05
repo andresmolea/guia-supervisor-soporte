@@ -390,8 +390,8 @@ function applyFilters() {
   var sectionVisible = {};
   document.querySelectorAll('.card').forEach(function (card) {
     var groupMatch = card.dataset.group === activeGroup;
-    var vertMatch = activeVertical === 'todos' || card.dataset.vertical === activeVertical;
     var textMatch = terms.length === 0 || terms.every(function (t) { return card.dataset.text.indexOf(t) !== -1; });
+    var vertMatch = activeGroup !== 'casos' || activeVertical === 'todos' || terms.length > 0 || card.dataset.vertical === activeVertical;
     var match = groupMatch && vertMatch && textMatch;
     card.classList.toggle('hidden', !match);
     if (match) visible++;
