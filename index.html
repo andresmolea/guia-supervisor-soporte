@@ -168,7 +168,7 @@ var sections = [
     section: "Drivers / Yummers",
     tag: "Caso",
     title: "Avance que nunca le cayó al driver",
-    html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li></ol>"
+    html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li><li>El problema casi siempre está del lado del banco, no de Yummy: si el avance ya está aprobado y el descuento ya se aplicó, eso significa que los fondos ya se liquidaron de nuestro lado. Por eso el reclamo del driver va dirigido a su banco, con una queja formal (no un mensaje genérico) que incluya el número de referencia de la operación y el ID interbancario (ref_ibp).</li></ol>"
   },
   {
     group: "casos",
@@ -182,7 +182,7 @@ var sections = [
     section: "Drivers / Yummers",
     tag: "Caso",
     title: "No le aparece la opción para solicitar un avance",
-    html: "<p>La habilitación es automática según salud de cuenta y rating, no se puede activar manualmente.</p>"
+    html: "<p>La habilitación es automática según salud de cuenta y rating, no se puede activar manualmente. Es importante transmitirlo como algo temporal, no como un error: si el driver mantiene su cuenta sana (sin deudas, buen rating), la opción se va a habilitar sola, no hay nada que forzar.</p>"
   },
   {
     group: "casos",
