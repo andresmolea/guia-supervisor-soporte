@@ -26,6 +26,8 @@
     --v-delivery: #13805B;
     --v-b2b: #D9A520;
     --v-avances: #2E6FBD;
+    --v-ticketmundo: #C0392B;
+    --v-marketplace: #0E8FBF;
     --section-color: #1d7a8c;
     --shadow: 0 10px 26px rgba(50,10,75,0.12);
     --shadow-sm: 0 2px 8px rgba(50,10,75,0.08);
@@ -43,7 +45,7 @@
       --accent: #d7b8f0; --accent-soft: #2a1f38;
       --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
       --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8;
+      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
       --section-color: #5fc9dd;
       --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
     }
@@ -54,7 +56,7 @@
     --accent: #d7b8f0; --accent-soft: #2a1f38;
     --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
     --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8;
+    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8; --v-ticketmundo: #e0695d; --v-marketplace: #4fc3e0;
     --section-color: #5fc9dd;
     --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
   }
@@ -84,6 +86,8 @@
   .v-btn.v-delivery.active { background: var(--v-delivery); }
   .v-btn.v-b2b.active { background: var(--v-b2b); color: #2b2206; }
   .v-btn.v-avances.active { background: var(--v-avances); }
+  .v-btn.v-ticketmundo.active { background: var(--v-ticketmundo); }
+  .v-btn.v-marketplace.active { background: var(--v-marketplace); }
   .section-divider { font-family: var(--font-display); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--section-color); margin: 26px 2px 14px; padding-bottom: 8px; border-bottom: 2px solid var(--section-color); }
   .section-divider:first-child { margin-top: 2px; }
   .section-divider.hidden { display: none; }
@@ -92,6 +96,8 @@
   .vtag.delivery { background: var(--v-delivery); }
   .vtag.b2b { background: var(--v-b2b); color: #2b2206; }
   .vtag.avances { background: var(--v-avances); }
+  .vtag.ticketmundo { background: var(--v-ticketmundo); }
+  .vtag.marketplace { background: var(--v-marketplace); }
   .search-box { position: sticky; top: 58px; background: var(--paper); padding: 0 0 14px; z-index: 5; }
   #search { width: 100%; padding: 13px 16px; font-size: 15.5px; font-family: var(--font-body); font-weight: 500; border-radius: var(--radius-md); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); }
   #search::placeholder { color: var(--ink-faint); }
@@ -134,6 +140,8 @@
     <button class="v-btn v-delivery" data-vertical="Delivery">Delivery</button>
     <button class="v-btn v-b2b" data-vertical="B2B">B2B</button>
     <button class="v-btn v-avances" data-vertical="Avances">Avances</button>
+    <button class="v-btn v-ticketmundo" data-vertical="TicketMundo">TicketMundo</button>
+    <button class="v-btn v-marketplace" data-vertical="Marketplace">Marketplace</button>
   </div>
   <div class="search-box">
     <input type="text" id="search" placeholder="Escribí tu caso o palabra clave..." autofocus>
@@ -256,6 +264,7 @@ var sections = [
   {
     group: "casos",
     section: "Pagos y cupones",
+    vertical: "Marketplace",
     tag: "Caso",
     title: "Marketplace (MP)",
     html: "<p><strong>Problemas de pago o envío entre vendedor y comprador:</strong></p><ol><li>Se solicitan los datos del vendedor y del comprador (según corresponda), captura de la venta/compra realizada, y captura del pago (si quien reporta es el comprador).</li><li>Se busca al usuario en la base de datos de MP, apartado <strong>Usuarios</strong>, para ubicar su información registrada.</li><li>Se ubican los datos de la venta en <strong>Desembolsos</strong>: se busca por la fecha de la transacción y se coteja con los datos del vendedor/comprador para evitar errores.</li><li>Se consulta por el canal <strong>#team-marketplace</strong> si el pago o el envío se realizó con éxito.</li><li>El equipo de Marketplace responde si hay algún inconveniente o no, y con esa respuesta se le informa al vendedor/comprador.</li></ol><p><strong>Órdenes financiadas con Cashea:</strong> mismo proceso, con la diferencia de que al ubicar el ID de la orden se revisa en la pestaña <strong>Cashea</strong> (en vez de Desembolsos) para corroborar si las cuotas están pagadas o pendientes. Ya con esa información, se remite igual al canal <strong>#team-marketplace</strong> para su verificación.</p>"
@@ -278,6 +287,7 @@ var sections = [
   {
     group: "casos",
     section: "Otros",
+    vertical: "TicketMundo",
     tag: "Caso",
     title: "TicketMundo",
     html: "<p>El analista reporta directo en <strong>#team-ticketmundo</strong> (datos del cliente, evento, pago). El rol del supervisor acá es solo estar pendiente por si Paula, Luis, o alguien de ese equipo pide apoyo de nuestro lado.</p>"
@@ -328,7 +338,7 @@ var cardsEl = document.getElementById('cards');
 var countEl = document.getElementById('count');
 var emptyEl = document.getElementById('empty');
 
-var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b', Avances: 'avances' };
+var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b', Avances: 'avances', TicketMundo: 'ticketmundo', Marketplace: 'marketplace' };
 var lastSection = null;
 
 sections.forEach(function (s, i) {
