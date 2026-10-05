@@ -310,9 +310,18 @@ var sections = [
   {
     group: "casos",
     section: "Otros",
+    vertical: "Delivery",
     tag: "Caso",
-    title: "Identidad de cliente (cambio de correo, teléfono o cédula)",
-    html: "<ol><li>Se reporta en el canal <strong>#identidad-clientes</strong>, tageando al subequipo de Soporte TI, con los datos actuales del perfil (Central ID, Nombre, Teléfono, Correo) y una captura de pantalla como evidencia.</li><li>Para cambio de correo o teléfono: \"Buenas tardes, equipo. User de Delivery (o Rides) desea colocar el correo electrónico / número de teléfono: [nuevo valor] en el perfil [Central ID] nos apoyan por favor.\"</li><li>Para corregir una cédula mal registrada: \"Me apoyan, por favor, corrigiendo la cédula de este user de Rides/Delivery ya que está errada\" + los datos del perfil + \"Cédula correcta: [número]\".</li><li><strong>Importante:</strong> antes de cambiar un correo, no debe existir ya otro perfil creado con ese correo. Si ya existe un perfil creado con ese correo, no hay vuelta atrás: no se puede hacer el cambio.</li><li>El equipo confirma en el mismo hilo cuando el cambio quedó hecho (\"cambio procesado\" / \"cambio realizado\").</li></ol>"
+    title: "Cambio de datos Delivery",
+    html: "<ol><li>Se reporta en el canal <strong>#identidad-clientes</strong>, tageando al subequipo de Soporte TI, con los datos actuales del perfil (Central ID, Nombre, Teléfono, Correo) y una captura de pantalla como evidencia.</li><li>Para cambio de correo o teléfono: \"Buenas tardes, equipo. User de Delivery desea colocar el correo electrónico / número de teléfono: [nuevo valor] en el perfil [Central ID] nos apoyan por favor.\"</li><li><strong>Importante:</strong><ul><li>Para cambiar el <strong>correo</strong>: no debe existir ya otro perfil creado con ese correo. Si ya existe un perfil con ese correo, no hay vuelta atrás: no se puede hacer el cambio.</li><li>Para cambiar el <strong>teléfono</strong>: es al revés. Tiene que existir ya un perfil creado con ese número de teléfono para poder solicitar el cambio.</li></ul></li><li>El equipo confirma en el mismo hilo cuando el cambio quedó hecho (\"cambio procesado\" / \"cambio realizado\").</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "Otros",
+    vertical: "Rides",
+    tag: "Caso",
+    title: "Cambio de datos Rides",
+    html: "<ol><li>Se reporta en el canal <strong>#identidad-clientes</strong>, tageando al subequipo de Soporte TI, con los datos actuales del perfil y una captura de pantalla como evidencia.</li><li>En Rides sí se puede cambiar correo, teléfono o cédula, pero no puede haber dos perfiles con el mismo teléfono ni con el mismo correo. Si ya existe un duplicado, el sistema no deja aplicar el cambio.</li><li>Para corregir una cédula mal registrada: \"Me apoyan, por favor, corrigiendo la cédula de este user de Rides ya que está errada\" + los datos del perfil + \"Cédula correcta: [número]\".</li><li>Si el usuario ya está verificado (KYC), el dashboard no deja modificarle la cédula directo, por eso este caso se escala a Tech por este mismo canal.</li><li>El equipo confirma en el mismo hilo cuando el cambio quedó hecho (\"cambio procesado\" / \"cambio realizado\").</li></ol>"
   },
   {
     group: "casos",
