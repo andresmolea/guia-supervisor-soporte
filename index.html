@@ -91,6 +91,13 @@
   .section-divider { font-family: var(--font-display); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--section-color); margin: 26px 2px 14px; padding-bottom: 8px; border-bottom: 2px solid var(--section-color); }
   .section-divider:first-child { margin-top: 2px; }
   .section-divider.hidden { display: none; }
+  .vertical-divider.rides { color: var(--v-rides); border-color: var(--v-rides); }
+  .vertical-divider.delivery { color: var(--v-delivery); border-color: var(--v-delivery); }
+  .vertical-divider.b2b { color: var(--v-b2b); border-color: var(--v-b2b); }
+  .vertical-divider.avances { color: var(--v-avances); border-color: var(--v-avances); }
+  .vertical-divider.ticketmundo { color: var(--v-ticketmundo); border-color: var(--v-ticketmundo); }
+  .vertical-divider.marketplace { color: var(--v-marketplace); border-color: var(--v-marketplace); }
+  .vertical-divider.none { color: var(--ink-faint); border-color: var(--line); }
   .vtag { display: inline-block; font-family: var(--font-display); font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: var(--radius-pill); margin-left: 6px; margin-bottom: 10px; color: #ffffff; }
   .vtag.rides { background: var(--v-rides); }
   .vtag.delivery { background: var(--v-delivery); }
@@ -124,6 +131,7 @@
   .tag.caso { background: var(--chip-fill); color: var(--chip-ink); }
   .tag.cierre { background: var(--dark-chip); color: var(--dark-chip-ink); }
   .tag.pend { background: var(--warning-soft); color: var(--warning); }
+  .tag.biblia { background: linear-gradient(135deg, var(--accent), var(--chip-fill)); color: #ffffff; }
   .empty { text-align: center; color: var(--ink-faint); padding: 40px 0; display: none; font-family: var(--font-display); font-weight: 600; }
   a { color: var(--accent); font-weight: 600; }
 </style>
@@ -137,8 +145,10 @@
     <div class="sub">Buscá tu caso por palabra clave (ej. "accidente", "tattoo", "avance", "bloqueo").</div>
   </div>
   <div class="tabs" id="tabs">
-    <button class="tab-btn active" data-group="casos">Casos</button>
-    <button class="tab-btn" data-group="canales">Canales de Slack</button>
+    <button class="tab-btn active" data-group="inicio">La Biblia</button>
+    <button class="tab-btn" data-group="casos">Casos</button>
+    <button class="tab-btn" data-group="todo">Todo</button>
+    <button class="tab-btn" data-group="canales">Canales</button>
     <button class="tab-btn" data-group="herramientas">Herramientas</button>
   </div>
   <div class="verticals" id="verticals">
@@ -160,10 +170,10 @@
 <script>
 var sections = [
   {
-    group: "casos",
-    tag: "Reglas",
-    title: "Reglas generales",
-    html: "<ul><li>Todo bloqueo, sin importar el motivo, requiere cargar el formulario de bloqueo correspondiente.</li><li>Toda orden ACTIVA (en curso, aún no marcada como entregada) es responsabilidad de Monitor, no nuestra.</li><li>Toda orden YA marcada como entregada es nuestra (no de Monitor), sin importar el motivo por el que escriban, no solo cuando el cliente dice que no la recibió. Por ejemplo, también aplica cuando un Yummer escribe por una orden que devolvió al comercio y le quedó la deuda.</li><li>Nunca se le dice a un driver o usuario que \"no hay solución posible\" sin antes escalar o confirmar el procedimiento correspondiente.</li><li>No se cierra ninguna conversación sin haber ofrecido un camino concreto: escalación, revisión del caso, o confirmación del proceso a seguir.</li><li>Siempre filtrar por ID, correo u otro dato <strong>en Slack</strong> (búsqueda del canal o del workspace) antes de proceder, para verificar que no exista ya un reporte previo del mismo caso. Aplica a todos los casos en general, no solo a los documentados acá.</li></ul>"
+    group: "inicio",
+    tag: "Biblia",
+    title: "La Biblia del Supervisor",
+    html: "<p>Estas son las reglas base: aplican a cualquier caso, sin importar el motivo.</p><ul><li>Todo bloqueo, sin importar el motivo, requiere cargar el formulario de bloqueo correspondiente.</li><li>Toda orden ACTIVA (en curso, aún no marcada como entregada) es responsabilidad de Monitor, no nuestra.</li><li>Toda orden YA marcada como entregada es nuestra (no de Monitor), sin importar el motivo por el que escriban, no solo cuando el cliente dice que no la recibió. Por ejemplo, también aplica cuando un Yummer escribe por una orden que devolvió al comercio y le quedó la deuda.</li><li>No se cierra ninguna conversación sin haber ofrecido un camino concreto: escalación, revisión del caso, o confirmación del proceso a seguir.</li><li>Siempre filtrar por ID, correo u otro dato <strong>en Slack</strong> (búsqueda del canal o del workspace) antes de proceder, para verificar que no exista ya un reporte previo del mismo caso. Aplica a todos los casos en general, no solo a los documentados acá.</li></ul>"
   },
   {
     group: "casos",
@@ -231,13 +241,6 @@ var sections = [
   },
   {
     group: "casos",
-    section: "Drivers / Yummers",
-    tag: "Caso",
-    title: "Maltrato o acoso entre driver y usuario",
-    html: "<p>Ejemplo real: un conductor maltrató verbalmente a la hija del usuario; el usuario adjunta capturas de WhatsApp como evidencia.</p><ol><li>Se procede con bloqueo por <strong>falta de respeto</strong>.</li><li>Se publica en <strong>#bloqueos-yummers-liveops</strong>: \"Feliz tarde, por favor proceder con el bloqueo por falta de respeto al usuario de parte de este conductor: [Central ID] [Nombre] [Correo] [Teléfono]\".</li><li>Se carga el formulario de bloqueo correspondiente.</li></ol>"
-  },
-  {
-    group: "casos",
     section: "Pagos y cupones",
     vertical: "Delivery",
     tag: "Caso",
@@ -263,6 +266,7 @@ var sections = [
   {
     group: "casos",
     section: "Pagos y cupones",
+    vertical: ["Rides", "Delivery"],
     tag: "Caso",
     title: "Pagos (validar pago móvil / débito inmediato)",
     html: "<p>Se valida con la herramienta <strong>Pagos V2</strong> (<a href=\"https://pagosv2.yummysuperapp.com/\" target=\"_blank\">pagosv2.yummysuperapp.com</a>), que permite filtrar por monto y otros datos para confirmar si un pago fue recibido. Reemplaza la herramienta de pagos anterior. También permite ver pagos por <strong>Binance</strong>.</p><ul><li><strong>Pago móvil:</strong> se filtra por el monto y el número de teléfono asociado al pago.</li><li><strong>Débito inmediato:</strong> se filtra por el monto y el nombre del titular de la cuenta desde donde se realizó el pago.</li><li><strong>Binance:</strong> se filtra por el monto en dólares.</li></ul>"
@@ -278,6 +282,7 @@ var sections = [
   {
     group: "casos",
     section: "Otros",
+    vertical: ["Rides", "Delivery"],
     tag: "Caso",
     title: "Prime (suscripción)",
     html: "<ol><li>Se indica al analista que remita el pago a <strong>Planning</strong> para verificar si el cobro fue efectivo.</li><li>Si el cobro fue efectivo (se cobró pero no se aplicó el beneficio), se le pide al usuario un video demostrando que no le aplicó el Prime.</li><li>Se escala a <strong>#team-yummy-rides</strong> o <strong>#team-delivery</strong> según la vertical.</li></ol>"
@@ -299,10 +304,10 @@ var sections = [
     html: "<p>El analista reporta directo en <strong>#team-ticketmundo</strong> (datos del cliente, evento, pago). El rol del supervisor acá es solo estar pendiente por si Paula, Luis, o alguien de ese equipo pide apoyo de nuestro lado.</p>"
   },
   {
-    group: "casos",
+    group: "inicio",
     tag: "Cierre",
     title: "Cierre de turno",
-    html: "<p>Lo arma quien está en el rol de analista de BOT ese turno. Los supervisores agregan su propio cierre aparte.</p><pre>Cierre: TURNO [número] [fecha]\nAgentes convocados: [número]\nAsistentes: [número]\n\nMÉTRICAS:\nCola: [descripción]\nChat totales: [número]\nSatisfacción: [%]\nSatisfacción del mes: [%]\nTMO: [tiempo]\nTPR: [tiempo]\nSLA: [%]\n\nPRINCIPALES CONTACTOS:\n[etiqueta] [%]\n[etiqueta] [%]\n\nBOTS:\nAnalista: [nombre]\nBot: [número]\nAgendados: [número]\nSOS General: [número] sin emergencia real\nAccidentes: [número]\nBloqueo: [número]\nBlocking Alerts: [número]\n---------------------------------------\nPendiente para el otro turno:\nBot: [número]\nAgendados: [número]\n\nSATISFACCIÓN DEL EQUIPO:\n[nombre]: [%]</pre>"
+    html: "<p>Lo arma quien está en el rol de analista de BOT ese turno. Los supervisores agregan su propio cierre aparte. Se pasa por el grupo de WhatsApp <strong>\"ESP + COORD LIVE OPS SUPPORT\"</strong>.</p><pre>Cierre: TURNO [número] [fecha]\nAgentes convocados: [número]\nAsistentes: [número]\n\nMÉTRICAS:\nCola: [descripción]\nChat totales: [número]\nSatisfacción: [%]\nSatisfacción del mes: [%]\nTMO: [tiempo]\nTPR: [tiempo]\nSLA: [%]\n\nPRINCIPALES CONTACTOS:\n[etiqueta] [%]\n[etiqueta] [%]\n\nBOTS:\nAnalista: [nombre]\nBot: [número]\nAgendados: [número]\nSOS General: [número] sin emergencia real\nAccidentes: [número]\nBloqueo: [número]\nBlocking Alerts: [número]\n---------------------------------------\nPendiente para el otro turno:\nBot: [número]\nAgendados: [número]\n\nSATISFACCIÓN DEL EQUIPO:\n[nombre]: [%]</pre>"
   },
   {
     group: "canales",
@@ -318,7 +323,7 @@ var sections = [
   },
   {
     group: "casos",
-    section: "Otros",
+    section: "Cambio de datos",
     vertical: "Delivery",
     tag: "Caso",
     title: "Cambio de datos de Users (Delivery)",
@@ -326,7 +331,7 @@ var sections = [
   },
   {
     group: "casos",
-    section: "Otros",
+    section: "Cambio de datos",
     vertical: "Rides",
     tag: "Caso",
     title: "Cambio de datos de Users (Rides)",
@@ -345,7 +350,13 @@ var countEl = document.getElementById('count');
 var emptyEl = document.getElementById('empty');
 
 var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b', Avances: 'avances', TicketMundo: 'ticketmundo', Marketplace: 'marketplace' };
+var VERTICAL_ORDER = ['Rides', 'Delivery', 'B2B', 'Avances', 'TicketMundo', 'Marketplace'];
 var lastSection = null;
+
+function verticalsOf(s) {
+  if (!s.vertical) return [];
+  return Array.isArray(s.vertical) ? s.vertical : [s.vertical];
+}
 
 sections.forEach(function (s, i) {
   if (s.group === 'casos' && s.section) {
@@ -360,24 +371,64 @@ sections.forEach(function (s, i) {
   } else if (s.group === 'casos') {
     lastSection = null;
   }
+  var verts = verticalsOf(s);
   var div = document.createElement('div');
   div.className = 'card';
   div.dataset.group = s.group;
+  div.dataset.tag = s.tag;
   if (s.section) div.dataset.section = s.section;
-  if (s.vertical) div.dataset.vertical = s.vertical;
+  if (verts.length) div.dataset.vertical = verts.join(',');
   div.dataset.text = (s.title + ' ' + s.tag + ' ' + s.html.replace(/<[^>]+>/g, ' ')).toLowerCase();
   var tagClass = 'tag';
   if (s.tag === 'Pendiente') tagClass += ' pend';
   else if (s.tag === 'Caso') tagClass += ' caso';
   else if (s.tag === 'Cierre') tagClass += ' cierre';
-  var vtagHtml = s.vertical ? '<span class="vtag ' + vertClass[s.vertical] + '">' + s.vertical + '</span>' : '';
-  var h2Class = s.vertical ? ' class="' + vertClass[s.vertical] + '"' : '';
+  else if (s.tag === 'Biblia') tagClass += ' biblia';
+  var vtagHtml = verts.map(function (v) { return '<span class="vtag ' + vertClass[v] + '">' + v + '</span>'; }).join('');
+  var h2Class = verts.length === 1 ? ' class="' + vertClass[verts[0]] + '"' : '';
   div.innerHTML = '<span class="' + tagClass + '">' + s.tag + '</span>' + vtagHtml + '<h2' + h2Class + '>' + s.title + '</h2>' + s.html;
   cardsEl.appendChild(div);
 });
 
-var activeGroup = 'casos';
+// Vista "Todo": las mismas tarjetas de Caso, agrupadas y ordenadas por pastilla.
+// Un caso con varias pastillas aparece bajo cada una (se clona para las siguientes).
+var casosOrder = Array.prototype.slice.call(cardsEl.children);
+var todoOrder = [];
+(function buildTodoOrder() {
+  var byVertical = {};
+  casosOrder.forEach(function (node) {
+    if (!node.classList.contains('card') || node.dataset.tag !== 'Caso') return;
+    var verts = node.dataset.vertical ? node.dataset.vertical.split(',') : ['__none__'];
+    verts.forEach(function (v, idx) {
+      var target = idx === 0 ? node : node.cloneNode(true);
+      if (idx > 0) target.dataset.clone = 'true';
+      target.dataset.groupVertical = v;
+      (byVertical[v] = byVertical[v] || []).push(target);
+    });
+  });
+  VERTICAL_ORDER.forEach(function (v) {
+    var cards = byVertical[v];
+    if (!cards || !cards.length) return;
+    var divider = document.createElement('div');
+    divider.className = 'section-divider vertical-divider ' + vertClass[v];
+    divider.dataset.vertical = v;
+    divider.textContent = v;
+    todoOrder.push(divider);
+    cards.forEach(function (c) { todoOrder.push(c); });
+  });
+  if (byVertical.__none__ && byVertical.__none__.length) {
+    var noneDivider = document.createElement('div');
+    noneDivider.className = 'section-divider vertical-divider none';
+    noneDivider.dataset.vertical = '__none__';
+    noneDivider.textContent = 'Sin categoría';
+    todoOrder.push(noneDivider);
+    byVertical.__none__.forEach(function (c) { todoOrder.push(c); });
+  }
+})();
+
+var activeGroup = 'inicio';
 var activeVertical = 'todos';
+document.getElementById('verticals').style.display = (activeGroup === 'casos' || activeGroup === 'todo') ? 'flex' : 'none';
 
 function updateCount(n) {
   countEl.textContent = n + (n === 1 ? ' resultado' : ' resultados');
@@ -388,17 +439,33 @@ function applyFilters() {
   var terms = q.split(/\s+/).filter(Boolean);
   var visible = 0;
   var sectionVisible = {};
+  var vertVisible = {};
   document.querySelectorAll('.card').forEach(function (card) {
-    var groupMatch = card.dataset.group === activeGroup;
+    var groupMatch = activeGroup === 'todo'
+      ? (card.dataset.tag === 'Caso')
+      : (card.dataset.group === activeGroup && card.dataset.clone !== 'true');
     var textMatch = terms.length === 0 || terms.every(function (t) { return card.dataset.text.indexOf(t) !== -1; });
-    var vertMatch = activeGroup !== 'casos' || activeVertical === 'todos' || terms.length > 0 || card.dataset.vertical === activeVertical;
+    var vertList = card.dataset.vertical ? card.dataset.vertical.split(',') : [];
+    var vertMatch;
+    if (activeGroup === 'todo') {
+      vertMatch = activeVertical === 'todos' || terms.length > 0 || card.dataset.groupVertical === activeVertical;
+    } else if (activeGroup === 'casos') {
+      vertMatch = activeVertical === 'todos' || terms.length > 0 || vertList.indexOf(activeVertical) !== -1;
+    } else {
+      vertMatch = true;
+    }
     var match = groupMatch && vertMatch && textMatch;
     card.classList.toggle('hidden', !match);
     if (match) visible++;
     if (match && card.dataset.section) sectionVisible[card.dataset.section] = true;
+    if (match && activeGroup === 'todo') vertVisible[card.dataset.groupVertical] = true;
   });
   document.querySelectorAll('.section-divider').forEach(function (div) {
-    div.classList.toggle('hidden', !(activeGroup === 'casos' && sectionVisible[div.dataset.section]));
+    if (div.classList.contains('vertical-divider')) {
+      div.classList.toggle('hidden', !(activeGroup === 'todo' && vertVisible[div.dataset.vertical]));
+    } else {
+      div.classList.toggle('hidden', !(activeGroup === 'casos' && sectionVisible[div.dataset.section]));
+    }
   });
   updateCount(visible);
   emptyEl.style.display = visible === 0 ? 'block' : 'none';
@@ -410,9 +477,17 @@ document.getElementById('search').addEventListener('input', applyFilters);
 document.getElementById('tabs').addEventListener('click', function (e) {
   var btn = e.target.closest('.tab-btn');
   if (!btn) return;
-  activeGroup = btn.dataset.group;
+  var newGroup = btn.dataset.group;
+  if (newGroup !== activeGroup) {
+    if (newGroup === 'todo') {
+      todoOrder.forEach(function (node) { cardsEl.appendChild(node); });
+    } else if (activeGroup === 'todo') {
+      casosOrder.forEach(function (node) { cardsEl.appendChild(node); });
+    }
+  }
+  activeGroup = newGroup;
   document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.toggle('active', b === btn); });
-  document.getElementById('verticals').style.display = activeGroup === 'casos' ? 'flex' : 'none';
+  document.getElementById('verticals').style.display = (activeGroup === 'casos' || activeGroup === 'todo') ? 'flex' : 'none';
   applyFilters();
 });
 
