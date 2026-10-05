@@ -25,6 +25,7 @@
     --v-rides: #8E43C0;
     --v-delivery: #13805B;
     --v-b2b: #D9A520;
+    --v-avances: #2E6FBD;
     --section-color: #1d7a8c;
     --shadow: 0 10px 26px rgba(50,10,75,0.12);
     --shadow-sm: 0 2px 8px rgba(50,10,75,0.08);
@@ -42,7 +43,7 @@
       --accent: #d7b8f0; --accent-soft: #2a1f38;
       --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
       --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530;
+      --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8;
       --section-color: #5fc9dd;
       --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
     }
@@ -53,7 +54,7 @@
     --accent: #d7b8f0; --accent-soft: #2a1f38;
     --line: #342849; --warning: #f0a84d; --warning-soft: #3a2611;
     --dark-chip: #0c0810; --dark-chip-ink: #ffd864;
-    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530;
+    --v-rides: #a568d1; --v-delivery: #22a378; --v-b2b: #e0b530; --v-avances: #6fb3e8;
     --section-color: #5fc9dd;
     --shadow: 0 10px 26px rgba(0,0,0,0.5); --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
   }
@@ -82,6 +83,7 @@
   .v-btn.v-rides.active { background: var(--v-rides); }
   .v-btn.v-delivery.active { background: var(--v-delivery); }
   .v-btn.v-b2b.active { background: var(--v-b2b); color: #2b2206; }
+  .v-btn.v-avances.active { background: var(--v-avances); }
   .section-divider { font-family: var(--font-display); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--section-color); margin: 26px 2px 14px; padding-bottom: 8px; border-bottom: 2px solid var(--section-color); }
   .section-divider:first-child { margin-top: 2px; }
   .section-divider.hidden { display: none; }
@@ -89,6 +91,7 @@
   .vtag.rides { background: var(--v-rides); }
   .vtag.delivery { background: var(--v-delivery); }
   .vtag.b2b { background: var(--v-b2b); color: #2b2206; }
+  .vtag.avances { background: var(--v-avances); }
   .search-box { position: sticky; top: 58px; background: var(--paper); padding: 0 0 14px; z-index: 5; }
   #search { width: 100%; padding: 13px 16px; font-size: 15.5px; font-family: var(--font-body); font-weight: 500; border-radius: var(--radius-md); border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); }
   #search::placeholder { color: var(--ink-faint); }
@@ -130,6 +133,7 @@
     <button class="v-btn v-rides" data-vertical="Rides">Rides</button>
     <button class="v-btn v-delivery" data-vertical="Delivery">Delivery</button>
     <button class="v-btn v-b2b" data-vertical="B2B">B2B</button>
+    <button class="v-btn v-avances" data-vertical="Avances">Avances</button>
   </div>
   <div class="search-box">
     <input type="text" id="search" placeholder="Escribí tu caso o palabra clave..." autofocus>
@@ -166,6 +170,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "Avance que nunca le cayó al driver",
     html: "<p>Ejemplo real: el conductor indica que solicitó un avance, se lo están cobrando, y nunca le llegó a su banco.</p><ol><li>Se le indica al analista que le pregunte al driver a qué banco está revisando (normalmente no sabe).</li><li>El supervisor entra a <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">credit-api.yummyrides.com/support</a>, busca el estado de desembolso, ve el número de cuenta, y con los primeros 4 dígitos identifica el banco.</li><li>Se le indica al driver que debe revisar en ese banco específico, porque ahí le tuvo que caer obligatoriamente.</li><li>Si insiste que no le llegó, se le indica que debe hacer el reclamo con su banco, y se le envía el mensaje predefinido que trae el mismo sistema (credit-api) al consultar el ID del driver en desembolso.</li><li>Esto nunca ha pasado, pero si el banco confirma que el dinero nunca llegó (error nuestro), se escala directo a Andrés Molea.</li><li>El problema casi siempre está del lado del banco, no de Yummy: si el avance ya está aprobado y el descuento ya se aplicó, eso significa que los fondos ya se liquidaron de nuestro lado. Por eso el reclamo del driver va dirigido a su banco, con una queja formal (no un mensaje genérico) que incluya el número de referencia de la operación y el ID interbancario (ref_ibp).</li></ol>"
@@ -173,6 +178,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "Cómo optar por un avance",
     html: "<p>La cuenta debe estar saludable, es decir, sin deudas pendientes y con buen rating. No es exclusivo de ninguna categoría de conductor.</p>"
@@ -180,6 +186,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "No le aparece la opción para solicitar un avance",
     html: "<p>La habilitación es automática según salud de cuenta y rating, no se puede activar manualmente. Es importante transmitirlo como algo temporal, no como un error: si el driver mantiene su cuenta sana (sin deudas, buen rating), la opción se va a habilitar sola, no hay nada que forzar.</p>"
@@ -187,6 +194,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "Número de cuenta bancaria mal",
     html: "<p>Se remite a finanzas por correo (atencionaldriver@yummysuperapp.com), pidiendo nombre, correo de registro, ciudad, evidencias, y la especificación de la solicitud. Tiempo de respuesta: 72 horas.</p>"
@@ -194,6 +202,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "Ya pagó su avance pero no le habilitan uno nuevo",
     html: "<p>También es automático, solo hay que esperar.</p>"
@@ -201,6 +210,7 @@ var sections = [
   {
     group: "casos",
     section: "Drivers / Yummers",
+    vertical: "Avances",
     tag: "Caso",
     title: "Bloqueo de drivers con avance activo",
     html: "<ol><li>Alguien reporta en el hilo correspondiente el driver a bloquear (ID, nombre y motivo).</li><li>Si al intentar aplicar el bloqueo el driver tiene avance activo: se agrega al blacklist manual del <a href=\"https://credit-api.yummyrides.com/support\" target=\"_blank\">dashboard de avances</a> para que no pueda pedir uno nuevo, se deja un comentario en ese mismo hilo indicando que tiene avance activo y que se bloqueará una vez pague, y se deja también el reporte por <strong>#cxylegal</strong>.</li><li>El sistema revisa esto automático: en el momento exacto en que el driver termina de pagar el avance, manda un aviso al canal <strong>#bloqueos-avances</strong> con este formato: \"El siguiente conductor: (ID y nombre) ya pagó el avance y debe ser bloqueado por: (motivo)\".</li><li>Al ver ese aviso: se aplica el bloqueo real de la cuenta en Yummy, se llena el formulario de bloqueo correspondiente, y se vuelve al hilo original del reporte para dejar el comentario confirmando que ya se bloqueó.</li></ol>"
@@ -316,7 +326,7 @@ var cardsEl = document.getElementById('cards');
 var countEl = document.getElementById('count');
 var emptyEl = document.getElementById('empty');
 
-var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b' };
+var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b', Avances: 'avances' };
 var lastSection = null;
 
 sections.forEach(function (s, i) {
