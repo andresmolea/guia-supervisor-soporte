@@ -82,6 +82,7 @@
   .v-btn:hover { border-color: var(--ink-faint); }
   .v-btn.active { color: #ffffff; border-color: transparent; }
   .v-btn.active { box-shadow: var(--shadow-sm); }
+  .v-btn.v-todos.active { background: var(--chip-fill); }
   .v-btn.v-rides.active { background: var(--v-rides); }
   .v-btn.v-delivery.active { background: var(--v-delivery); }
   .v-btn.v-b2b.active { background: var(--v-b2b); color: #2b2206; }
@@ -147,11 +148,11 @@
   <div class="tabs" id="tabs">
     <button class="tab-btn active" data-group="inicio">Inicio</button>
     <button class="tab-btn" data-group="casos">Casos</button>
-    <button class="tab-btn" data-group="todo">Todo</button>
     <button class="tab-btn" data-group="canales">Canales</button>
     <button class="tab-btn" data-group="herramientas">Herramientas</button>
   </div>
   <div class="verticals" id="verticals">
+    <button class="v-btn v-todos active" data-vertical="todos">Todos</button>
     <button class="v-btn v-rides" data-vertical="Rides">Rides</button>
     <button class="v-btn v-delivery" data-vertical="Delivery">Delivery</button>
     <button class="v-btn v-b2b" data-vertical="B2B">B2B</button>
@@ -351,32 +352,19 @@ var emptyEl = document.getElementById('empty');
 
 var vertClass = { Rides: 'rides', Delivery: 'delivery', B2B: 'b2b', Avances: 'avances', TicketMundo: 'ticketmundo', Marketplace: 'marketplace' };
 var VERTICAL_ORDER = ['Rides', 'Delivery', 'B2B', 'Avances', 'TicketMundo', 'Marketplace'];
-var lastSection = null;
 
 function verticalsOf(s) {
   if (!s.vertical) return [];
   return Array.isArray(s.vertical) ? s.vertical : [s.vertical];
 }
 
-sections.forEach(function (s, i) {
-  if (s.group === 'casos' && s.section) {
-    if (s.section !== lastSection) {
-      var divider = document.createElement('div');
-      divider.className = 'section-divider';
-      divider.dataset.section = s.section;
-      divider.textContent = s.section;
-      cardsEl.appendChild(divider);
-      lastSection = s.section;
-    }
-  } else if (s.group === 'casos') {
-    lastSection = null;
-  }
+var builtCards = [];
+sections.forEach(function (s) {
   var verts = verticalsOf(s);
   var div = document.createElement('div');
   div.className = 'card';
   div.dataset.group = s.group;
   div.dataset.tag = s.tag;
-  if (s.section) div.dataset.section = s.section;
   if (verts.length) div.dataset.vertical = verts.join(',');
   div.dataset.text = (s.title + ' ' + s.tag + ' ' + s.html.replace(/<[^>]+>/g, ' ')).toLowerCase();
   var tagClass = 'tag';
@@ -387,21 +375,19 @@ sections.forEach(function (s, i) {
   var vtagHtml = verts.map(function (v) { return '<span class="vtag ' + vertClass[v] + '">' + v + '</span>'; }).join('');
   var h2Class = verts.length === 1 ? ' class="' + vertClass[verts[0]] + '"' : '';
   div.innerHTML = '<span class="' + tagClass + '">' + s.tag + '</span>' + vtagHtml + '<h2' + h2Class + '>' + s.title + '</h2>' + s.html;
-  cardsEl.appendChild(div);
+  builtCards.push({ el: div, group: s.group, verts: verts });
 });
 
-// Vista "Todo": las mismas tarjetas de Caso, agrupadas y ordenadas por pastilla.
+// "Casos" se agrupa y ordena siempre por pastilla de vertical.
 // Un caso con varias pastillas aparece bajo cada una (se clona para las siguientes).
-var casosOrder = Array.prototype.slice.call(cardsEl.children);
-var todoOrder = [];
-(function buildTodoOrder() {
+// Lo que no tiene vertical (ej. Pendientes por documentar) cae en "Sin categoría".
+(function buildCasosOrder() {
   var byVertical = {};
-  casosOrder.forEach(function (node) {
-    if (!node.classList.contains('card') || node.dataset.tag !== 'Caso') return;
-    var verts = node.dataset.vertical ? node.dataset.vertical.split(',') : ['__none__'];
+  builtCards.forEach(function (c) {
+    if (c.group !== 'casos') return;
+    var verts = c.verts.length ? c.verts : ['__none__'];
     verts.forEach(function (v, idx) {
-      var target = idx === 0 ? node : node.cloneNode(true);
-      if (idx > 0) target.dataset.clone = 'true';
+      var target = idx === 0 ? c.el : c.el.cloneNode(true);
       target.dataset.groupVertical = v;
       (byVertical[v] = byVertical[v] || []).push(target);
     });
@@ -413,22 +399,27 @@ var todoOrder = [];
     divider.className = 'section-divider vertical-divider ' + vertClass[v];
     divider.dataset.vertical = v;
     divider.textContent = v;
-    todoOrder.push(divider);
-    cards.forEach(function (c) { todoOrder.push(c); });
+    cardsEl.appendChild(divider);
+    cards.forEach(function (c) { cardsEl.appendChild(c); });
   });
   if (byVertical.__none__ && byVertical.__none__.length) {
     var noneDivider = document.createElement('div');
     noneDivider.className = 'section-divider vertical-divider none';
     noneDivider.dataset.vertical = '__none__';
     noneDivider.textContent = 'Sin categoría';
-    todoOrder.push(noneDivider);
-    byVertical.__none__.forEach(function (c) { todoOrder.push(c); });
+    cardsEl.appendChild(noneDivider);
+    byVertical.__none__.forEach(function (c) { cardsEl.appendChild(c); });
   }
 })();
 
+// El resto de pestañas (Inicio, Canales, Herramientas) no necesitan orden especial.
+builtCards.forEach(function (c) {
+  if (c.group !== 'casos') cardsEl.appendChild(c.el);
+});
+
 var activeGroup = 'inicio';
 var activeVertical = 'todos';
-document.getElementById('verticals').style.display = (activeGroup === 'casos' || activeGroup === 'todo') ? 'flex' : 'none';
+document.getElementById('verticals').style.display = activeGroup === 'casos' ? 'flex' : 'none';
 
 function updateCount(n) {
   countEl.textContent = n + (n === 1 ? ' resultado' : ' resultados');
@@ -438,34 +429,18 @@ function applyFilters() {
   var q = document.getElementById('search').value.trim().toLowerCase();
   var terms = q.split(/\s+/).filter(Boolean);
   var visible = 0;
-  var sectionVisible = {};
   var vertVisible = {};
   document.querySelectorAll('.card').forEach(function (card) {
-    var groupMatch = activeGroup === 'todo'
-      ? (card.dataset.tag === 'Caso')
-      : (card.dataset.group === activeGroup && card.dataset.clone !== 'true');
+    var groupMatch = card.dataset.group === activeGroup;
     var textMatch = terms.length === 0 || terms.every(function (t) { return card.dataset.text.indexOf(t) !== -1; });
-    var vertList = card.dataset.vertical ? card.dataset.vertical.split(',') : [];
-    var vertMatch;
-    if (activeGroup === 'todo') {
-      vertMatch = activeVertical === 'todos' || terms.length > 0 || card.dataset.groupVertical === activeVertical;
-    } else if (activeGroup === 'casos') {
-      vertMatch = activeVertical === 'todos' || terms.length > 0 || vertList.indexOf(activeVertical) !== -1;
-    } else {
-      vertMatch = true;
-    }
+    var vertMatch = activeGroup !== 'casos' || activeVertical === 'todos' || terms.length > 0 || card.dataset.groupVertical === activeVertical;
     var match = groupMatch && vertMatch && textMatch;
     card.classList.toggle('hidden', !match);
     if (match) visible++;
-    if (match && card.dataset.section) sectionVisible[card.dataset.section] = true;
-    if (match && activeGroup === 'todo') vertVisible[card.dataset.groupVertical] = true;
+    if (match && activeGroup === 'casos') vertVisible[card.dataset.groupVertical] = true;
   });
-  document.querySelectorAll('.section-divider').forEach(function (div) {
-    if (div.classList.contains('vertical-divider')) {
-      div.classList.toggle('hidden', !(activeGroup === 'todo' && vertVisible[div.dataset.vertical]));
-    } else {
-      div.classList.toggle('hidden', !(activeGroup === 'casos' && sectionVisible[div.dataset.section]));
-    }
+  document.querySelectorAll('.vertical-divider').forEach(function (div) {
+    div.classList.toggle('hidden', !(activeGroup === 'casos' && vertVisible[div.dataset.vertical]));
   });
   updateCount(visible);
   emptyEl.style.display = visible === 0 ? 'block' : 'none';
@@ -477,26 +452,22 @@ document.getElementById('search').addEventListener('input', applyFilters);
 document.getElementById('tabs').addEventListener('click', function (e) {
   var btn = e.target.closest('.tab-btn');
   if (!btn) return;
-  var newGroup = btn.dataset.group;
-  if (newGroup !== activeGroup) {
-    if (newGroup === 'todo') {
-      todoOrder.forEach(function (node) { cardsEl.appendChild(node); });
-    } else if (activeGroup === 'todo') {
-      casosOrder.forEach(function (node) { cardsEl.appendChild(node); });
-    }
-  }
-  activeGroup = newGroup;
+  activeGroup = btn.dataset.group;
   document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.toggle('active', b === btn); });
-  document.getElementById('verticals').style.display = (activeGroup === 'casos' || activeGroup === 'todo') ? 'flex' : 'none';
+  document.getElementById('verticals').style.display = activeGroup === 'casos' ? 'flex' : 'none';
   applyFilters();
 });
 
 document.getElementById('verticals').addEventListener('click', function (e) {
   var btn = e.target.closest('.v-btn');
   if (!btn) return;
-  var alreadyActive = btn.classList.contains('active');
-  activeVertical = alreadyActive ? 'todos' : btn.dataset.vertical;
-  document.querySelectorAll('.v-btn').forEach(function (b) { b.classList.toggle('active', !alreadyActive && b === btn); });
+  var v = btn.dataset.vertical;
+  if (v !== 'todos') {
+    var alreadyActive = btn.classList.contains('active');
+    v = alreadyActive ? 'todos' : v;
+  }
+  activeVertical = v;
+  document.querySelectorAll('.v-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.vertical === activeVertical); });
   applyFilters();
 });
 </script>
