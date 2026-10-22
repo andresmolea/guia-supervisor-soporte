@@ -378,6 +378,54 @@ var sections = [
     tag: "Caso",
     title: "Cambio de datos de Users (Rides)",
     html: "<ol><li>En Rides, el correo y el teléfono los cambia el especialista directamente (no se pasa por #identidad-clientes para esos dos). Sigue aplicando la regla de que no puede haber dos perfiles con el mismo teléfono ni con el mismo correo.</li><li>La única excepción es la <strong>cédula</strong>: si el usuario ya está verificado (KYC), el dashboard no deja modificarla directo, así que ese caso puntual sí se escala por <strong>#identidad-clientes</strong>.</li><li>Para escalar la cédula: se reporta en el canal <strong>#identidad-clientes</strong>, tageando al subequipo de Soporte TI, con los datos actuales del perfil y SIEMPRE una foto de la cédula del usuario como evidencia (sin eso no se puede aplicar el cambio): \"Me apoyan, por favor, corrigiendo la cédula de este user de Rides ya que está errada\" + los datos del perfil + \"Cédula correcta: [número]\".</li><li>El equipo confirma en el mismo hilo cuando el cambio quedó hecho (\"cambio procesado\" / \"cambio realizado\").</li></ol>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Roles, herramientas y responsabilidades (Especialista B2B & Wink)",
+    html: "<p>El Especialista B2B garantiza la continuidad operativa de los comercios aliados, el monitoreo constante de conductores y la resolución en tiempo real de cualquier incidencia que afecte el nivel de servicio.</p><table><tr><th>Área / Herramienta</th><th>Descripción de la función</th><th>SLA / Objetivo</th></tr><tr><td><strong>Admin de Wink (panel general)</strong></td><td>Panel principal y central de administración de todas las tiendas Wink. Acceso a configuración general, consulta de ID de comercios, monitoreo de productos y acceso al BOT.</td><td>Acceso total · <a href=\"https://admin.winktienda.com/negocios/3361\" target=\"_blank\">Admin Wink↗</a></td></tr><tr><td><strong>Sheet de Asistencia</strong></td><td>Registro obligatorio diario de analistas en Turno 1 y Turno 2 al inicio de cada jornada.</td><td>Al inicio de cada turno · <a href=\"https://docs.google.com/spreadsheets/d/1R6XVPM-rv5txkOBCmgWwaX1yWgNwzdVAkjhrL91Zk5Y/edit?pli=1&gid=725481941#gid=725481941\" target=\"_blank\">Sheet Asistencia↗</a></td></tr><tr><td><strong>SLA de respuesta y calidad</strong></td><td>Monitorear y asegurar respuesta a comercios en menos de 5 minutos. Si se excede, se envía feedback por Slack y se registra en el Sheet de Calidad.</td><td>&lt; 5 minutos · <a href=\"https://docs.google.com/spreadsheets/d/1r3ixrRujGknocCAHANjF_NCZXm4rJ5GP0j4Fay_DLWc/edit?pli=1&gid=901732837#gid=901732837\" target=\"_blank\">Sheet Calidad↗</a> · <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSd1dpvOpUV-puXd3D2d-aNqZdMOHroAgdKh_9NDQ6fx0EMT8Q/viewform?pli=1&pli=1\" target=\"_blank\">Formulario↗</a></td></tr><tr><td><strong>Atención operativa B2B/Wink</strong></td><td>Resolución en vivo de asignación de órdenes, seguimiento de ETA de drivers y soporte en sitio al momento del contacto del aliado.</td><td>Resolución en primer contacto · #live-ops-b2b</td></tr><tr><td><strong>Ajustes de viajes</strong></td><td>Llenado del formulario de ajustes reportados por los analistas en Slack por cambio de dirección o retorno de paquete.</td><td>Procesamiento diario · #Ajustes-B2B · <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSe4sLmQvAbwcut9G7I6q7mZyr3e3Et6SBo37c-Q1Kgh9RrMyQ/viewform?pli=1&pli=1\" target=\"_blank\">Ajustes B2B↗</a></td></tr><tr><td><strong>Canalización comercial (Account Managers)</strong></td><td>Identificar requerimientos administrativos (cambios de menú, retenciones, pagos mensuales) y escalarlos directamente al Account Manager asignado.</td><td>Inmediato · <a href=\"https://docs.google.com/spreadsheets/d/1uX9DqrkfVOuIZ6nI9WhrLZcVrzbGN5cLp28Tfk1ubDo/edit?pli=1&gid=0#gid=0\" target=\"_blank\">Sheet Comercial↗</a> · #Support-Wink</td></tr></table>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Gestión y monitoreo en Wink",
+    html: "<ul><li><strong>Asignación prioritaria:</strong> la mayoría de los aliados de Wink son del rubro gastronómico, así que el factor tiempo es crítico. La asignación de driver debe ser inmediata para evitar que el alimento pierda temperatura.</li><li><strong>Verificación de ETA:</strong> validar con los conductores su tiempo estimado de llegada al establecimiento para el retiro, asegurando que los alimentos se entreguen en óptimas condiciones.</li><li><strong>Atención al primer contacto:</strong> monitoreo constante de los canales para resolver solicitudes en el momento en que el comercio contacta, evitando demoras o escalaciones innecesarias.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Protocolo de gestión de credenciales y onboarding (Wink)",
+    html: "<p><strong>A. Durante la carga de credenciales</strong> (mientras se carga la información en los grupos de comunicación con el aliado):</p><ul><li><strong>Dentro del horario operativo:</strong> se etiqueta directamente al equipo de Postventa en el grupo para atención inmediata.</li><li><strong>Fuera del horario operativo:</strong> el supervisor/especialista ingresa al Backoffice, le indica al aliado su usuario registrado y le pide intentar ingresar con la clave genérica <strong>123456789</strong>. Si el intento falla, se escala el caso detallado por Slack.</li></ul><p><strong>B. Post-carga de credenciales y manejo de requerimientos</strong> (una vez finalizada la carga en los grupos de WhatsApp):</p><ol><li><strong>Verificación por parte del aliado:</strong> se le indica que intente ingresar usando las credenciales agregadas en la descripción del grupo de WhatsApp.</li><li><strong>Gestión de errores e incidencias especiales</strong> (reportes de pago, cambio de clave, zonas de reparto, configuración de zonas y mapas, creación de cupones y campañas, creación de usuarios):<ul><li><strong>Dentro del horario operativo:</strong> se remite la incidencia directamente en el grupo etiquetando al AM asignado.</li><li><strong>Fuera del horario operativo:</strong> se escala etiquetando al AM correspondiente por Slack.</li></ul></li></ol>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Escalación de requerimientos administrativos al Account Manager",
+    html: "<p>Cuando un comercio presente solicitudes de índole administrativa o de gestión de cuenta, Soporte debe escalar al Account Manager (AM) encargado del aliado. Casos para escalación comercial / AM:</p><ul><li>Cambios o actualización del menú/catálogo de la tienda.</li><li>Envío y procesamiento de retenciones fiscales.</li><li>Consultas o soporte sobre el pago mensual de la tienda.</li><li>Modificaciones contractuales, comisiones o datos de la cuenta.</li></ul><p>Para identificar quién es el AM encargado del comercio: <a href=\"https://docs.google.com/spreadsheets/d/1uX9DqrkfVOuIZ6nI9WhrLZcVrzbGN5cLp28Tfk1ubDo/edit?pli=1&gid=0#gid=0\" target=\"_blank\">Sheet de Asignación de Account Managers↗</a></p>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Soporte técnico operativo y configuración de tiendas (Wink)",
+    html: "<ul><li><strong>Cancelación de órdenes desde la tienda:</strong> el especialista puede cancelar una orden directamente dentro de la tienda, solo cuando el comercio aliado lo pida de forma explícita. Al procesar la cancelación, el motivo debe ser siempre \"Apoyo al aliado\".</li><li><strong>Apagado / encendido de tiendas:</strong> si el aliado no puede o no sabe cerrar su tienda en la plataforma, el especialista le apoya apagándola directamente dentro de la tienda del comercio.</li><li><strong>Ubicación del ID de la tienda:</strong> se obtiene ingresando al Admin de Wink. Ejemplo: en buffalosvzla.winktienda.com, el ID es todo lo que está antes del primer punto.</li><li><strong>Asignación manual de repartidores Yummy:</strong> si la plataforma del comercio falla y no le permite al aliado asignar repartidores, el especialista hace la asignación directa del conductor dentro de la tienda, con la opción \"Enviar con Yummy\".</li><li><strong>Revisión de configuración de productos:</strong> apoyar al comercio revisando que productos, menú, ítems y configuraciones estén cargados correctamente, para prevenir errores en las solicitudes.</li><li><strong>Escalación a Tecnología (fallas con la app / BOT de la tienda):</strong> si se identifica un problema técnico grave que no se pueda resolver internamente, se reporta de inmediato por <strong>#support-wink</strong>, etiquetando directamente a <strong>Dani Castro</strong> o <strong>Julio Navas</strong>.</li></ul>"
+  },
+  {
+    group: "casos",
+    section: "B2B",
+    vertical: "B2B",
+    tag: "Caso",
+    title: "Ajustes de viajes y órdenes completadas no entregadas (B2B)",
+    html: "<p>El especialista procesa el <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSe4sLmQvAbwcut9G7I6q7mZyr3e3Et6SBo37c-Q1Kgh9RrMyQ/viewform?pli=1&pli=1\" target=\"_blank\">Formulario de Ajustes B2B↗</a> basándose en lo reportado por los analistas en <strong>#Ajustes-B2B</strong>.</p><p><strong>Motivos de ajuste permitidos:</strong></p><ul><li><strong>Cambio de dirección:</strong> cuando la entrega requiere un ajuste de tarifa o recalculación de ruta por una modificación del punto de destino.</li><li><strong>Retorno de paquete:</strong> cuando el cliente final no contesta, se agotan los intentos de contacto, y el conductor debe devolver la mercancía al Punto A.</li></ul><p><strong>Verticales aplicables:</strong> Farmatodo, Cashea, Wink y B2B se ajustan por ambos motivos (cambio de dirección y retorno de paquete / orden marcada como entregada sin retirar). Mercado Libre solo se ajusta por retorno de paquete.</p><p><strong>Protocolo para órdenes completadas, no entregadas</strong> (aplica a todas las verticales: Mercado Libre, Wink, B2B, Cashea y Farmatodo):</p><ol><li>Monitoreo inmediato cuando el aliado reporte que una orden figura como completada en sistema pero el cliente no la ha recibido.</li><li>El especialista/analista debe agotar los canales de contacto (llamadas, WhatsApp, mensajes) con el conductor asignado.</li><li>Si pasa <strong>1 hora</strong> sin lograr comunicación ni respuesta del driver, se procede al bloqueo preventivo y escalación (los casos con más de 72 horas no aplican para bloqueo).</li><li>Se recopilan evidencias: capturas de los intentos de llamada/mensajes sin respuesta, registros del sistema de la orden, y el reporte del aliado.</li><li>Se ejecuta el bloqueo preventivo del conductor en la plataforma, se carga el formulario de incidencias/feedback, y se escala el caso al equipo comercial por <strong>#Teamb2b</strong>.</li></ol>"
   }
 ];
 
